@@ -2,7 +2,7 @@ import sqlite3
 
 from os import path
 
-from database_functions import create_database, get_usernames_list, add_user, get_master_hashed, delete_user, get_user_id
+from database_functions import create_database, get_usernames_list, add_user, get_master_hashed, delete_user, get_user_id, list_saved_services
 from encryption_functions import get_hash, generate_key
 
 def main_menu():
@@ -104,7 +104,14 @@ def main():
                         break
             
                     elif operation == 'l':
-                        pass
+                        services_list = list_saved_services(user_id)
+
+                        if len(services_list) == 0:
+                            print("\nThere are no services yet\n")
+                        else:
+                            print('\nOkay, listing services...\n')
+                            for i in range(len(services_list)):
+                                print(f'Service {i + 1}: {services_list[i][0]}\n')
 
                     elif operation == 'a':
                         pass

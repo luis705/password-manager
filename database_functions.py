@@ -80,3 +80,15 @@ def delete_user(user_id):
 
     conn.commit()
     conn.close()
+
+def list_saved_services(user_id):
+    conn = sqlite3.connect('passwords.db')
+    cursor = conn.cursor()
+
+    cursor.execute(f'SELECT service_name FROM services WHERE user_id="{user_id}"')
+    services = cursor.fetchall()
+
+    conn.commit()
+    conn.close()
+
+    return services
