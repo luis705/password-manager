@@ -3,16 +3,13 @@ from os import path
 from database_functions import create_database
 
 def main_menu():
-    print('-----------------------------------------')
-    print('|   What do you want to do?             |')
-    print('| "l": list saved services              |')
-    print('| "a": add new service                  |')
-    print('| "g": get data from a service          |')
-    print('| "u": update data from a service       |')
-    print('| "d": delete a service                 |')
-    print('| "e": exit                             |')
-    print('-----------------------------------------')
-    
+    print('------------------------------')
+    print('|   What do you want to do?  |')
+    print('| "l": login                 |')
+    print('| "s": sign up               |')
+    print('| "d": delete user           |')
+    print('| "e": exit                  |')
+    print('------------------------------')
     return input()
 
 def main():
@@ -38,3 +35,5 @@ def main():
         elif option == 'd':
             pass
 
+if __name__ == "__main__":
+    main()

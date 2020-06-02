@@ -128,5 +128,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-#  IDE files
+# IDE files
 .vscode
+
+# Database file
+passwords.db
