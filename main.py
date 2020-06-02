@@ -15,6 +15,21 @@ def main_menu():
     print('------------------------------')
     return input()
 
+def check_user(username, provided_hash):
+    user_exist = False
+    users_list = get_usernames_list()
+    
+    for user in users_list:
+        if username == user[0]:
+            if provided_hash == get_master_hashed(username):
+                return True
+                break
+            else:
+                return False
+                break
+    else:
+        return None
+
 def main():
     if not path.exists('passwords.db'):
         create_database()
@@ -57,33 +72,24 @@ def main():
 
         elif option == 'l':
             pass
-
+        
         elif option == 'd':
             username = input('\nWhat is your username? ')
             provided_password = input('\nWhat is your master password? ')
             provided_hashed = str(get_hash(provided_password))
 
-            user_exist = False
-            users_list = get_usernames_list()
-            for user in users_list:
-                if username == user[0]:
-                    user_exist = True
-                    break
-            else:
-                print("\nThis user doesn't exists")
+            accessed = check_user(username, provided_hashed)
+
+            if accessed == True:
+                user_id = get_user_id(username)
+                delete_user(user_id)
+                print(f'\nThe user {username} was deleted successfully')
             
-            if user_exist:
-                master_hashed = get_master_hashed(username)
-
-                if provided_hashed == master_hashed:
-                    user_id = get_user_id(username)
-                    delete_user(user_id)
-                    print(f'\nThe user {username} was deleted successfully')
-                
-                else:
-                    print('\nAccess denied!')
-
-
+            elif accessed == False:
+                print('\nAccess denied!')
+            
+            elif accessed == None:
+                print("\nThis user doesn't exists")
 
 
 if __name__ == "__main__":
