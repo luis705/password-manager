@@ -133,3 +133,29 @@ def check_data_from_service(user_id, service_name):
     conn.close()
 
     return results[0], results[1][2:-1]
+
+def update_service_username(user_id, service, username):
+    conn = sqlite3.connect('passwords.db')
+    cursor = conn.cursor()
+    
+    cursor.execute(f'''
+                    UPDATE services
+                    SET username="{username}"
+                    WHERE user_id="{user_id}"
+                    AND service_name="{service}"''')
+    
+    conn.commit()
+    conn.close()
+
+def update_service_password(user_id, service, password):
+    conn = sqlite3.connect('passwords.db')
+    cursor = conn.cursor()
+    
+    cursor.execute(f'''
+                    UPDATE services
+                    SET password="{password}"
+                    WHERE user_id="{user_id}"
+                    AND service_name="{service}"''')
+    
+    conn.commit()
+    conn.close()
