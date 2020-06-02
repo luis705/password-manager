@@ -42,15 +42,41 @@ def get_usernames_list():
 
 def add_user(username, master_hashed, key):
 
-    print(username, type(username))
-    print(master_hashed, type(master_hashed))
-    print(key, type(key))
-
     conn = sqlite3.connect('passwords.db')
     cursor = conn.cursor()
 
     cursor.execute(f'''INSERT INTO users ("username", "master_password", "key")
                     VALUES ("{username}", "{master_hashed}", "{key}")''')
+
+    conn.commit()
+    conn.close()
+
+def get_master_hashed(username):
+    conn = sqlite3.connect('passwords.db')
+    cursor = conn.cursor()
+
+    cursor.execute(f'SELECT master_password FROM users WHERE username="{username}"')
+    master_password_hashed = cursor.fetchone()
+
+    conn.commit()
+    conn.close()
+
+    return master_password_hashed[0]
+
+def get_user_id(username):
+    conn = sqlite3.connect('passwords.db')
+    cursor = conn.cursor()
+
+    cursor.execute(f'SELECT id FROM USERS WHERE username="{username}"')
+    user_id = cursor.fetchone()[0]
+    return user_id
+
+def delete_user(user_id):
+    conn = sqlite3.connect('passwords.db')
+    cursor = conn.cursor()
+
+    cursor.execute(f'DELETE FROM users WHERE id={user_id}')
+    cursor.execute(f'DELETE FROM services WHERE user_id={user_id}')
 
     conn.commit()
     conn.close()

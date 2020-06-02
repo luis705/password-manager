@@ -2,7 +2,7 @@ import sqlite3
 
 from os import path
 
-from database_functions import create_database, get_usernames_list, add_user
+from database_functions import create_database, get_usernames_list, add_user, get_master_hashed, delete_user, get_user_id
 from encryption_functions import get_hash, generate_key
 
 def main_menu():
@@ -55,12 +55,36 @@ def main():
             #except sqlite3.Error:
                 #print('\nAn error ocurred, try again later')
 
-
         elif option == 'l':
             pass
 
         elif option == 'd':
-            pass
+            username = input('\nWhat is your username? ')
+            provided_password = input('\nWhat is your master password? ')
+            provided_hashed = str(get_hash(provided_password))
+
+            user_exist = False
+            users_list = get_usernames_list()
+            for user in users_list:
+                if username == user[0]:
+                    user_exist = True
+                    break
+            else:
+                print("\nThis user doesn't exists")
+            
+            if user_exist:
+                master_hashed = get_master_hashed(username)
+
+                if provided_hashed == master_hashed:
+                    user_id = get_user_id(username)
+                    delete_user(user_id)
+                    print(f'\nThe user {username} was deleted successfully')
+                
+                else:
+                    print('\nAccess denied!')
+
+
+
 
 if __name__ == "__main__":
     main()
