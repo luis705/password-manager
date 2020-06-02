@@ -15,6 +15,18 @@ def main_menu():
     print('------------------------------')
     return input()
 
+def user_menu():
+    print('-----------------------------------------')
+    print('|       What do you want to do?         |')
+    print('| "l": list saved services              |')
+    print('| "a": add new service                  |')
+    print('| "g": get data from a service          |')
+    print('| "u": update data from a service       |')
+    print('| "d": delete a service                 |')
+    print('| "e": exit                             |')
+    print('-----------------------------------------')
+    return input()
+
 def check_user(username, provided_hash):
     user_exist = False
     users_list = get_usernames_list()
@@ -71,7 +83,46 @@ def main():
                 #print('\nAn error ocurred, try again later')
 
         elif option == 'l':
-            pass
+            username = input('\nWhat is your username? ')
+            provided_password = input('\nWhat is your master password? ')
+            provided_hashed = str(get_hash(provided_password))
+
+            accessed = check_user(username, provided_hashed)
+
+            if accessed == True:
+                print(f'\nWellcome {username}\n')
+                user_id = get_user_id(username)
+                
+                while True:
+                    operation = user_menu()
+
+                    if operation not in ['l', 'a', 'g', 'u', 'd', 'e']:
+                        print('\nInvalid option!')
+                    
+                    elif operation == 'e':
+                        print(f'\nGoodbye {username}!\n')
+                        break
+            
+                    elif operation == 'l':
+                        pass
+
+                    elif operation == 'a':
+                        pass
+
+                    elif operation == 'g':
+                        pass
+
+                    elif operation == 'u':
+                        pass
+
+                    elif operation == 'd':
+                        pass
+
+            elif accessed == False:
+                print('\nAccess denied!')
+            
+            elif accessed == None:
+                print('\nUser not found')
         
         elif option == 'd':
             username = input('\nWhat is your username? ')
