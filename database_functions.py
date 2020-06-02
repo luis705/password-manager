@@ -28,4 +28,29 @@ def create_database():
     conn.commit()
     conn.close()
 
+def get_usernames_list():
+    conn = sqlite3.connect('passwords.db')
+    cursor = conn.cursor()
 
+    cursor.execute('SELECT username FROM users')
+    users_list = cursor.fetchall()
+
+    conn.commit()
+    conn.close()
+
+    return users_list
+
+def add_user(username, master_hashed, key):
+
+    print(username, type(username))
+    print(master_hashed, type(master_hashed))
+    print(key, type(key))
+
+    conn = sqlite3.connect('passwords.db')
+    cursor = conn.cursor()
+
+    cursor.execute(f'''INSERT INTO users ("username", "master_password", "key")
+                    VALUES ("{username}", "{master_hashed}", "{key}")''')
+
+    conn.commit()
+    conn.close()
