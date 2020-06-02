@@ -2,8 +2,8 @@ import sqlite3
 
 from os import path
 
-from database_functions import create_database, get_usernames_list, add_user, get_master_hashed, delete_user, get_user_id, list_saved_services
-from encryption_functions import get_hash, generate_key
+from database_functions import create_database, get_usernames_list, add_user, get_master_hashed, delete_user, get_user_id, list_saved_services, get_key, add_service
+from encryption_functions import get_hash, generate_key, encrypt_password, decrypt_password
 
 def main_menu():
     print('------------------------------')
@@ -92,6 +92,7 @@ def main():
             if accessed == True:
                 print(f'\nWellcome {username}\n')
                 user_id = get_user_id(username)
+                user_key = get_key(user_id)
                 
                 while True:
                     operation = user_menu()
@@ -114,7 +115,24 @@ def main():
                                 print(f'Service {i + 1}: {services_list[i][0]}\n')
 
                     elif operation == 'a':
-                        pass
+                        #  Check if service isn't alredy saved
+                        services_list = list_saved_services(user_id)
+                        valid = False
+                        while not valid:
+                            service_name = input('\nWhat is the name of the service? ')
+                            for service in services_list:
+                                if service_name == service[0]:
+                                    print("\nService alredy registered")
+                                    break
+                            else: valid = True
+
+                        username = input(f"\nWhat is your username in {service_name}? ")
+                        password = input(f'\nWhat is your password in {service_name}? ')
+                        encrypted_password = encrypt_password(user_key, password)
+
+                        add_service(service_name, username, encrypted_password, user_id)
+
+                        print('\nService added successfully!')
 
                     elif operation == 'g':
                         pass

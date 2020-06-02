@@ -14,3 +14,14 @@ def get_hash(string):
 
 def generate_key():
     return Fernet.generate_key()
+
+def encrypt_password(key, password):
+    f = Fernet(key)
+    token = f.encrypt(password.encode())
+    return token
+
+def decrypt_password(key, encrypted_password):
+    f = Fernet(key)
+    password = f.decrypt(encrypted_password.encode())
+    return password
+

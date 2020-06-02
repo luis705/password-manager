@@ -92,3 +92,27 @@ def list_saved_services(user_id):
     conn.close()
 
     return services
+
+def get_key(user_id):
+    conn = sqlite3.connect('passwords.db')
+    cursor = conn.cursor()
+
+    cursor.execute(f'SELECT key FROM users where id="{user_id}"')
+    key = cursor.fetchone()[0]
+    key = key[2:-1]
+    
+    conn.commit()
+    conn.close()
+
+    return key.encode()
+
+def add_service(service_name, username, encrypted_password, user_id):
+    conn = sqlite3.connect('passwords.db')
+    cursor = conn.cursor()
+
+    cursor.execute(f'''
+                    INSERT INTO services (service_name, username, password, user_id)
+                    VALUES ("{service_name}", "{username}", "{encrypted_password}", "{user_id}")''')
+    
+    conn.commit()
+    conn.close()
