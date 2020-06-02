@@ -2,7 +2,7 @@ import sqlite3
 
 from os import path
 
-from database_functions import create_database, get_usernames_list, add_user, get_master_hashed, delete_user, get_user_id, list_saved_services, get_key, add_service
+from database_functions import *
 from encryption_functions import get_hash, generate_key, encrypt_password, decrypt_password
 
 def main_menu():
@@ -135,7 +135,24 @@ def main():
                         print('\nService added successfully!')
 
                     elif operation == 'g':
-                        pass
+                        service = input('\nWhat service do you want to check? ')
+                        service_list = list_saved_services(user_id)
+
+                        for existing_service in service_list:
+                            if service == existing_service[0]:
+                                exists = True
+                                break
+                        else:
+                            exists = False
+                        
+                        if not exists:
+                            print('\nThis is not a registered service')
+                        else:
+                            username, hashed_password = check_data_from_service(user_id, service)
+
+                            password = decrypt_password(user_key, hashed_password)
+
+                            print(f'\nService: {service}\nUsername: {username}\nPassword: {password}')
 
                     elif operation == 'u':
                         pass
