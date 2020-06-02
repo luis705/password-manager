@@ -159,3 +159,12 @@ def update_service_password(user_id, service, password):
     
     conn.commit()
     conn.close()
+
+def delete_service(user_id, service):
+    conn = sqlite3.connect('passwords.db')
+    cursor = conn.cursor()
+
+    cursor.execute(f'DELETE FROM services WHERE user_id="{user_id}" AND service_name="{service}"')
+
+    conn.commit()
+    conn.close()

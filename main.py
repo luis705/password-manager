@@ -195,7 +195,23 @@ def main():
                             print("\nThis service isn't registred")
 
                     elif operation == 'd':
-                        pass
+                        service = input('\nWhat is the service you want to delete? ')
+
+                        service_list = list_saved_services(user_id)
+
+                        for name in service_list:
+                            if name[0] == service:
+                                exists = True
+                                break
+                        else:
+                            exists = False
+                        
+                        if exists:
+                            delete_service(user_id, service)
+                            print('\nService deleted successfully!')
+
+                        else:
+                            print("\nThis service isn't registred")
 
             elif accessed == False:
                 print('\nAccess denied!')
