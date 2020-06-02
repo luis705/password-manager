@@ -155,7 +155,44 @@ def main():
                             print(f'\nService: {service}\nUsername: {username}\nPassword: {password}')
 
                     elif operation == 'u':
-                        pass
+                        service = input('\nWhat is the service you want to update? ')
+
+                        service_list = list_saved_services(user_id)
+
+                        for name in service_list:
+                            if name[0] == service:
+                                exists = True
+                                break
+                        else:
+                            exists = False
+                        
+                        if exists:
+                            username = input('\nWhat will be your new username? (press enter for no changing) ')
+                            password = input('\nWhat will be your new password? (press enter for no changing) ')
+
+                            if username == '' and password == '':
+                                print('\nYou must change at least one!')
+                                continue
+                                
+                            elif username == '':
+
+                                encrypted_password = encrypt_password(user_key, password)
+                                update_service_password(user_id, service, encrypted_password)
+                            
+                            elif password == '':
+                                update_service_username(user_id, service, username)
+
+                            
+
+                            elif username != '' and password != '':
+                                encrypted_password = encrypt_password(user_key, password)
+                                update_service_password(user_id, service, encrypted_password)
+                                update_service_username(user_id, service, username)
+                            
+                            print('\nService updated successfully!')
+
+                        else:
+                            print("\nThis service isn't registred")
 
                     elif operation == 'd':
                         pass

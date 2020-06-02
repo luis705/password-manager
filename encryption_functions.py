@@ -24,4 +24,3 @@ def decrypt_password(key, encrypted_password):
     f = Fernet(key)
     password = f.decrypt(encrypted_password.encode())
     return password.decode()
-
