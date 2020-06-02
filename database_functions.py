@@ -116,3 +116,20 @@ def add_service(service_name, username, encrypted_password, user_id):
     
     conn.commit()
     conn.close()
+
+def check_data_from_service(user_id, service_name):
+    conn = sqlite3.connect('passwords.db')
+    cursor = conn.cursor()
+
+    cursor.execute(f'''
+                    SELECT username, password
+                    FROM services
+                    WHERE user_id="{user_id}"
+                    AND service_name="{service_name}"
+                    ''')
+
+    results = cursor.fetchone()
+    conn.commit()
+    conn.close()
+
+    return results[0], results[1][2:-1]
