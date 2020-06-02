@@ -1,6 +1,9 @@
+import sqlite3
+
 from os import path
 
-from database_functions import create_database
+from database_functions import create_database, get_usernames_list, add_user
+from encryption_functions import get_hash, generate_key
 
 def main_menu():
     print('------------------------------')
@@ -25,11 +28,35 @@ def main():
         
         elif option == 'e':
             exit()
+        
+        elif option == 's':
+            #  Create new user
+            print('I will need some informations. DO NOT FORGET OR YOU WILL LOSE ACCESS TO ALL YOUR PASSWORDS\n')
+            
+            #  Check if username is valid
+            users_list = get_usernames_list()
+            valid = False
+            while not valid:
+                username = input('\nWhat is your username? ')
+                for name in users_list:
+                    if username == name[0]:
+                        print('\nUsername alredy taken')
+                        break
+                else:
+                    valid = True
+            
+            master_password = input('\nWhat is your master password? ')
+            master_hashed = get_hash(master_password)
+            key = generate_key()
+
+            #try:
+            add_user(username, master_hashed, key)
+            print('\nUser added successully!')
+            #except sqlite3.Error:
+                #print('\nAn error ocurred, try again later')
+
 
         elif option == 'l':
-            pass
-
-        elif option == 's':
             pass
 
         elif option == 'd':
