@@ -59,15 +59,19 @@ sudo apt-get install python3
 <p>Open the terminal and run</p>
 
 ```
-pip install cryptography
+pip install cryptography, PyQt5
 ```
 
 
-<h2>Playing</h2>
+<h2>Using</h2>
 <p>To use the manager just open the terminal and run main.py with</p>
 
 ```
-python main.py
+python3 main.py
+```
+<p>In case you want to execute the GUI version run the file gui.py</p>
+```
+pythohn3 gui.py
 ```
 
 ---
@@ -79,6 +83,7 @@ python main.py
 - [X] Options to add or remove user
 - [X] Options to add remove, update and check password for a given service
 - [X] Option to check registered services
+- [X] GUI
 
 <h2> Built with</h2>
 <ul>
