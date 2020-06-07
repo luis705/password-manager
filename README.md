@@ -88,11 +88,22 @@ pythohn3 gui.py
 <h2> Built with</h2>
 <ul>
 	<li>Core
-    <p><a href="python.org">Python</a> - a easy to learn, but powerfull programming language</p>
-  </li>
+    		<p>
+			<a href="python.org">Python</a> - a easy to learn, but powerfull programming language
+		</p>
+  	</li>
   	<li>Storage
-    <p><a href="https://www.sqlite.org">SQLite</a> -  a small, fast, self-contained, high-reliability, full-featured, SQL database engine.</p>
-  </li>
+    	<p>
+				<a href="https://www.sqlite.org">SQLite</a> -  
+				a small, fast, self-contained, high-reliability, full-featured, SQL database engine.
+			</p>
+  	</li>
+		<li>GUI
+			<p>
+			<a href='https://www.riverbankcomputing.com/software/pyqt/'>PyQt5</a> - 
+				Bidings for <a href='https://www.qt.io/'>the QtCompany's</a> Qt application framework implemented as python modules
+			</p>
+			
 </ul>
 	
 --- 
