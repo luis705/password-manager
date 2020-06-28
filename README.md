@@ -59,7 +59,7 @@ sudo apt-get install python3
 <p>Open the terminal and run</p>
 
 ```
-pip install cryptography, PyQt5
+pip install cryptography PyQt5
 ```
 
 
