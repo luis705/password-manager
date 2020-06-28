@@ -39,7 +39,7 @@
 </ul>
 
 ```
-git clone git@github.com:luis705/twitter-bot.git
+git clone git@github.com:luis705/password-manager.git
 ```
 <h3>Install python</h3>
 <ul>
