@@ -1,29 +1,21 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QLabel, QPushButton, QLineEdit, QMessageBox, QListWidget
-from application_states import ApplicationStates
+from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QLabel,
+                             QPushButton, QLineEdit, QMessageBox)
 
-import sys
 from os import path
 import sqlite3
+import sys
 
+
+from application_states import ApplicationStates
+from constants import (SCREEN_WIDTH, SCREEN_HEIGHT, HEADER_WIDTH, HEADER_HEIGHT,
+                       MAIN_MENU_BUTTON_WIDTH, BUTTON_WIDTH, BUTTON_HEIGHT, ENTRY_WIDTH,
+                       ENTRY_HEIGHT, USER_BUTTON_WIDTH, USER_BUTTON_HEIGHT)
 from database_functions import (add_service, add_user, check_data_from_service, create_database,
-                                delete_service, delete_user, get_master_hashed, get_key, get_user_id,
-                                get_usernames_list, list_saved_services, update_service_password, update_service_username)
+                                delete_service, delete_user, get_master_hashed, get_key,
+                                get_user_id, get_usernames_list, list_saved_services,
+                                update_service_password, update_service_username)
 from encryption_functions import get_hash, generate_key, encrypt_password, decrypt_password
-
-SCREEN_WIDTH = 450
-SCREEN_HEIGHT = 450
-HEADER_WIDTH = 250
-HEADER_HEIGHT = 35
-MAIN_MENU_BUTTON_WIDTH = 100
-BUTTON_WIDTH = 200
-BUTTON_HEIGHT = 40
-ENTRY_WIDTH = 250
-ENTRY_HEIGHT = 30
-LABEL_WIDTH = 100
-LABEL_HEIGHT = 30
-USER_BUTTON_WIDTH = 130
-USER_BUTTON_HEIGHT = 60
 
 
 class Application(object):
@@ -55,7 +47,7 @@ class Application(object):
         self.header.setAlignment(QtCore.Qt.AlignCenter)
         self.header.setObjectName("header")
 
-        #  Buttons setup
+        #  ------------------Buttons setup------------------
 
         #  Sign up button
         self.sign_up_button = QPushButton(self.centralwidget)
@@ -147,7 +139,7 @@ class Application(object):
         self.cancel_operation_button.hide()
         self.cancel_operation_button.clicked.connect(self.cancel)
 
-        #  LineEdit setup
+        #  ------------------LineEdit setup------------------
 
         #  Username
         self.username = QLineEdit(self.centralwidget)
@@ -169,7 +161,7 @@ class Application(object):
         self.service_name.hide()
         self.service_name.setPlaceholderText('Service name')
 
-        #  Message box setup
+        #  ------------------Message box setup------------------
 
         #  Warning box
         self.warning = QMessageBox()
@@ -203,6 +195,9 @@ class Application(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
+        """
+        Set texts and titles
+        """
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Password manager"))
         self.header.setText(_translate("MainWindow", "MAIN MENU"))
@@ -240,7 +235,7 @@ class Application(object):
         self.service_name.hide()
         self.cancel_operation_button.hide()
 
-        #  Clear envery QLineEdit
+        #  Clear every QLineEdit
         self.password.clear()
         self.username.clear()
         self.service_name.clear()
@@ -249,39 +244,56 @@ class Application(object):
         self.header.setGeometry(
             (SCREEN_WIDTH - HEADER_WIDTH) // 2, SCREEN_HEIGHT // 6, HEADER_WIDTH, HEADER_HEIGHT)
         self.sign_up_button.setGeometry(
-            2 * SCREEN_WIDTH // 5 - MAIN_MENU_BUTTON_WIDTH, 3 * (SCREEN_HEIGHT // 2 - BUTTON_HEIGHT) // 2, MAIN_MENU_BUTTON_WIDTH, BUTTON_HEIGHT)
+            2 * SCREEN_WIDTH // 5 - MAIN_MENU_BUTTON_WIDTH,
+            3 * (SCREEN_HEIGHT // 2 - BUTTON_HEIGHT) // 2,
+            MAIN_MENU_BUTTON_WIDTH, BUTTON_HEIGHT)
         self.login_button.setGeometry(
-            4 * SCREEN_WIDTH // 5 - MAIN_MENU_BUTTON_WIDTH, 3 * (SCREEN_HEIGHT // 2 - BUTTON_HEIGHT) // 2, MAIN_MENU_BUTTON_WIDTH, BUTTON_HEIGHT)
+            4 * SCREEN_WIDTH // 5 - MAIN_MENU_BUTTON_WIDTH,
+            3 * (SCREEN_HEIGHT // 2 - BUTTON_HEIGHT) // 2,
+            MAIN_MENU_BUTTON_WIDTH, BUTTON_HEIGHT)
         self.main_menu_button.setGeometry(
             (SCREEN_WIDTH - BUTTON_WIDTH) // 2, 4 * SCREEN_HEIGHT // 5, BUTTON_WIDTH, BUTTON_HEIGHT)
         show_hide_password_button_height = 4 * SCREEN_HEIGHT // 5 - SCREEN_HEIGHT // 10
         self.show_hide_password_button.setGeometry(
-            (SCREEN_WIDTH - BUTTON_WIDTH) // 2, show_hide_password_button_height, BUTTON_WIDTH, BUTTON_HEIGHT)
+            (SCREEN_WIDTH - BUTTON_WIDTH) // 2, show_hide_password_button_height,
+            BUTTON_WIDTH, BUTTON_HEIGHT)
         send_data_button_height = show_hide_password_button_height - SCREEN_HEIGHT // 10
         self.send_data.setGeometry(
-            (SCREEN_WIDTH - BUTTON_WIDTH) // 2, send_data_button_height, BUTTON_WIDTH, BUTTON_HEIGHT)
+            (SCREEN_WIDTH - BUTTON_WIDTH) // 2, send_data_button_height,
+            BUTTON_WIDTH, BUTTON_HEIGHT)
         self.list_button.setGeometry(
-            (SCREEN_WIDTH - 3 * USER_BUTTON_WIDTH) // 2, SCREEN_HEIGHT // 3, USER_BUTTON_WIDTH, USER_BUTTON_HEIGHT)
+            (SCREEN_WIDTH - 3 * USER_BUTTON_WIDTH) // 2, SCREEN_HEIGHT // 3,
+            USER_BUTTON_WIDTH, USER_BUTTON_HEIGHT)
         self.add_service_button.setGeometry(
-            (SCREEN_WIDTH - USER_BUTTON_WIDTH) // 2, SCREEN_HEIGHT // 3, USER_BUTTON_WIDTH, USER_BUTTON_HEIGHT)
+            (SCREEN_WIDTH - USER_BUTTON_WIDTH) // 2, SCREEN_HEIGHT // 3,
+            USER_BUTTON_WIDTH, USER_BUTTON_HEIGHT)
         self.get_data_button.setGeometry(
-            (SCREEN_WIDTH + USER_BUTTON_WIDTH) // 2, SCREEN_HEIGHT // 3, USER_BUTTON_WIDTH, USER_BUTTON_HEIGHT)
+            (SCREEN_WIDTH + USER_BUTTON_WIDTH) // 2, SCREEN_HEIGHT // 3,
+            USER_BUTTON_WIDTH, USER_BUTTON_HEIGHT)
         self.update_service_button.setGeometry(
-            (SCREEN_WIDTH - 3 * USER_BUTTON_WIDTH) // 2, SCREEN_HEIGHT // 2, USER_BUTTON_WIDTH, USER_BUTTON_HEIGHT)
+            (SCREEN_WIDTH - 3 * USER_BUTTON_WIDTH) // 2, SCREEN_HEIGHT // 2,
+            USER_BUTTON_WIDTH, USER_BUTTON_HEIGHT)
         self.delete_service_button.setGeometry(
-            (SCREEN_WIDTH - USER_BUTTON_WIDTH) // 2, SCREEN_HEIGHT // 2, USER_BUTTON_WIDTH, USER_BUTTON_HEIGHT)
+            (SCREEN_WIDTH - USER_BUTTON_WIDTH) // 2, SCREEN_HEIGHT // 2,
+            USER_BUTTON_WIDTH, USER_BUTTON_HEIGHT)
         self.delete_user_button.setGeometry(
-            (SCREEN_WIDTH + USER_BUTTON_WIDTH) // 2, SCREEN_HEIGHT // 2, USER_BUTTON_WIDTH, USER_BUTTON_HEIGHT)
+            (SCREEN_WIDTH + USER_BUTTON_WIDTH) // 2, SCREEN_HEIGHT // 2,
+            USER_BUTTON_WIDTH, USER_BUTTON_HEIGHT)
         self.logoff_button.setGeometry(
-            (SCREEN_WIDTH - 3 * USER_BUTTON_WIDTH) // 2, 2 * SCREEN_HEIGHT // 3, USER_BUTTON_WIDTH * 3, USER_BUTTON_HEIGHT)
+            (SCREEN_WIDTH - 3 * USER_BUTTON_WIDTH) // 2, 2 * SCREEN_HEIGHT // 3,
+            USER_BUTTON_WIDTH * 3, USER_BUTTON_HEIGHT)
         self.cancel_operation_button.setGeometry(
-            (SCREEN_WIDTH - BUTTON_WIDTH) // 2, 9 * SCREEN_HEIGHT // 10 - BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT)
+            (SCREEN_WIDTH - BUTTON_WIDTH) // 2, 9 * SCREEN_HEIGHT // 10 - BUTTON_HEIGHT,
+            BUTTON_WIDTH, BUTTON_HEIGHT)
         self.username.setGeometry(
-            (SCREEN_WIDTH - ENTRY_WIDTH) // 2,  2 * (SCREEN_HEIGHT - ENTRY_HEIGHT) // 5, ENTRY_WIDTH, ENTRY_HEIGHT)
+            (SCREEN_WIDTH - ENTRY_WIDTH) // 2,  2 * (SCREEN_HEIGHT - ENTRY_HEIGHT) // 5,
+            ENTRY_WIDTH, ENTRY_HEIGHT)
         self.password.setGeometry(
-            (SCREEN_WIDTH - ENTRY_WIDTH) // 2,  (SCREEN_HEIGHT - ENTRY_HEIGHT) // 2, ENTRY_WIDTH, ENTRY_HEIGHT)
+            (SCREEN_WIDTH - ENTRY_WIDTH) // 2,  (SCREEN_HEIGHT - ENTRY_HEIGHT) // 2,
+            ENTRY_WIDTH, ENTRY_HEIGHT)
         self.service_name.setGeometry(
-            (SCREEN_WIDTH - ENTRY_WIDTH) // 2, 29 * (SCREEN_HEIGHT - ENTRY_HEIGHT) // 100,  ENTRY_WIDTH, ENTRY_HEIGHT)
+            (SCREEN_WIDTH - ENTRY_WIDTH) // 2, 29 * (SCREEN_HEIGHT - ENTRY_HEIGHT) // 100,
+            ENTRY_WIDTH, ENTRY_HEIGHT)
         self.listing.setGeometry(550, 300, 500, 500)
 
         #  Hide passwords
@@ -289,6 +301,9 @@ class Application(object):
         self.password_shown = False
 
     def sign_up(self):
+        """
+        Show sign up screen
+        """
         self.reset_widgets()
         self.main_menu_button.show()
         self.password.show()
@@ -299,6 +314,9 @@ class Application(object):
         self.header.setText('Sign up')
 
     def login(self):
+        """
+        Show login screen
+        """
         self.reset_widgets()
         self.main_menu_button.show()
         self.password.show()
@@ -309,6 +327,9 @@ class Application(object):
         self.header.setText('Login')
 
     def main_menu(self):
+        """
+        Show main menu screen
+        """
         self.reset_widgets()
         self.login_button.show()
         self.sign_up_button.show()
@@ -316,6 +337,9 @@ class Application(object):
         self.header.setText('MAIN MENU')
 
     def show_password(self):
+        """
+        Toggle passwords is shown on or of
+        """
         if self.password_shown:
             self.password.setEchoMode(QLineEdit.Password)
             self.password.EchoMode() == QLineEdit.Password
@@ -328,6 +352,9 @@ class Application(object):
             self.show_hide_password_button.setText('Hide Password')
 
     def send(self):
+        """
+        Send data from QLineEdit
+        """
 
         if self.state == ApplicationStates.SIGN_UP:
             self.provided_username = self.username.text()
@@ -372,7 +399,6 @@ class Application(object):
             provided_hash = str(get_hash(self.provided_password))
 
             #  Checking if user exists
-            user_exist = False
             users_list = get_usernames_list()
 
             for user in users_list:
@@ -386,7 +412,7 @@ class Application(object):
             else:
                 accessed = None
 
-            if accessed == True:
+            if accessed:
                 self.reset_widgets()
                 self.user_id = get_user_id(self.provided_username)
                 self.user_key = get_key(self.user_id)
@@ -399,11 +425,11 @@ class Application(object):
                 self.delete_user_button.show()
                 self.logoff_button.show()
 
-            elif accessed == False:
+            elif accessed is False:
                 self.warning.setText('Access denied!')
                 self.warning.show()
 
-            elif accessed == None:
+            elif accessed is None:
                 self.warning.setText('User not found')
                 self.warning.show()
 
@@ -496,7 +522,7 @@ class Application(object):
                         self.user_id, service_name, encrypted_password)
 
                 elif password == '':
-                    update_service_username(user_id, service, username)
+                    update_service_username(self.user_id, service_name, username)
 
                 elif username != '' and password != '':
                     encrypted_password = encrypt_password(
@@ -539,6 +565,9 @@ class Application(object):
                 self.cancel()
 
     def list(self):
+        """
+        List saved services
+        """
         services_list = list_saved_services(self.user_id)
         if len(services_list) == 0:
             self.warning.setText('There are no services yet')
@@ -551,6 +580,9 @@ class Application(object):
             self.listing.show()
 
     def add(self):
+        """
+        Add new service
+        """
         self.reset_widgets()
         self.header.setText('New service')
         self.show_hide_password_button.show()
@@ -562,6 +594,9 @@ class Application(object):
         self.cancel_operation_button.show()
 
     def get(self):
+        """
+        Show password checking screen
+        """
         self.reset_widgets()
         #  Reset widgets geometry
         self.service_name.setGeometry(
@@ -569,7 +604,8 @@ class Application(object):
                                                 ENTRY_HEIGHT) // 2, ENTRY_WIDTH, ENTRY_HEIGHT
         )
         self.cancel_operation_button.setGeometry(
-            (SCREEN_WIDTH - BUTTON_WIDTH) // 2, 4 * SCREEN_HEIGHT // 5 - BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT)
+            (SCREEN_WIDTH - BUTTON_WIDTH) // 2, 4 * SCREEN_HEIGHT // 5 - BUTTON_HEIGHT,
+            BUTTON_WIDTH, BUTTON_HEIGHT)
         self.service_name.show()
 
         #  Reset app state
@@ -581,6 +617,9 @@ class Application(object):
         self.header.setText('Password checking')
 
     def update(self):
+        """
+        Show service update screen
+        """
         self.reset_widgets()
         self.header.setText('Update service')
         self.show_hide_password_button.show()
@@ -592,6 +631,9 @@ class Application(object):
         self.cancel_operation_button.show()
 
     def delete_service(self):
+        """
+        Show delete service screen
+        """
         self.reset_widgets()
         #  Reset widgets geometry
         self.service_name.setGeometry(
@@ -599,7 +641,8 @@ class Application(object):
                                                 ENTRY_HEIGHT) // 2, ENTRY_WIDTH, ENTRY_HEIGHT
         )
         self.cancel_operation_button.setGeometry(
-            (SCREEN_WIDTH - BUTTON_WIDTH) // 2, 4 * SCREEN_HEIGHT // 5 - BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT)
+            (SCREEN_WIDTH - BUTTON_WIDTH) // 2, 4 * SCREEN_HEIGHT // 5 - BUTTON_HEIGHT,
+            BUTTON_WIDTH, BUTTON_HEIGHT)
         self.service_name.show()
 
         #  Reset app state
@@ -611,9 +654,11 @@ class Application(object):
         self.header.setText('Deleting service')
 
     def delete_user(self):
+        """Show delete user message box"""
         self.delete_user.show()
 
     def delete_user_confirmation(self):
+        """Show delete user confirmation"""
         delete_user(self.user_id)
         self.delete_user.hide()
         self.info.setText('User deleted successfully!')
@@ -622,11 +667,13 @@ class Application(object):
         self.user_key = None
 
     def logoff(self):
+        """Go to main menu and logoff"""
         self.main_menu()
         self.user_id = None
         self.user_key = None
 
     def cancel(self):
+        """Cancel a operation and return to operation choice menu"""
         self.state = ApplicationStates.LOGIN
         self.reset_widgets()
         self.header.setText(f'Welcome {self.provided_username}')
