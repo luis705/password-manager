@@ -70,6 +70,7 @@ pip install cryptography PyQt5
 python3 main.py
 ```
 <p>In case you want to execute the GUI version run the file gui.py</p>
+
 ```
 pythohn3 gui.py
 ```
