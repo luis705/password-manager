@@ -1,6 +1,10 @@
 import enum
 
+
 class ApplicationStates(enum.Enum):
+    """
+    Application states for the gui version
+    """
     MAIN_MENU = 1
     SIGN_UP = 2
     LOGIN = 3

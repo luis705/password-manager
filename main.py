@@ -2,7 +2,10 @@ import sqlite3
 
 from os import path
 
-from database_functions import *
+from database_functions import (add_service, add_user, check_data_from_service, create_database,
+                                delete_service, delete_user, get_master_hashed, get_key,
+                                get_user_id, get_usernames_list, list_saved_services,
+                                update_service_password, update_service_username)
 from encryption_functions import get_hash, generate_key, encrypt_password, decrypt_password
 
 
@@ -31,7 +34,6 @@ def user_menu():
 
 
 def check_user(username, provided_hash):
-    user_exist = False
     users_list = get_usernames_list()
 
     for user in users_list:
@@ -61,8 +63,8 @@ def main():
 
         elif option == 's':
             #  Create new user
-            print(
-                'I will need some informations. DO NOT FORGET OR YOU WILL LOSE ACCESS TO ALL YOUR PASSWORDS\n')
+            print('''I will need some informations. DO NOT FORGET OR YOU WILL
+                    LOSE ACCESS TO ALL YOUR PASSWORDS\n''')
 
             #  Check if username is valid
             users_list = get_usernames_list()
@@ -93,7 +95,7 @@ def main():
 
             accessed = check_user(username, provided_hashed)
 
-            if accessed == True:
+            if accessed:
                 print(f'\nWellcome {username}\n')
                 user_id = get_user_id(username)
                 user_key = get_key(user_id)
@@ -236,10 +238,10 @@ def main():
                         else:
                             print("\nThis service isn't registred")
 
-            elif accessed == False:
+            elif accessed is False:
                 print('\nAccess denied!')
 
-            elif accessed == None:
+            elif accessed is None:
                 print('\nUser not found')
 
         elif option == 'd':
@@ -249,15 +251,15 @@ def main():
 
             accessed = check_user(username, provided_hashed)
 
-            if accessed == True:
+            if accessed:
                 user_id = get_user_id(username)
                 delete_user(user_id)
                 print(f'\nThe user {username} was deleted successfully')
 
-            elif accessed == False:
+            elif accessed is False:
                 print('\nAccess denied!')
 
-            elif accessed == None:
+            elif accessed is None:
                 print("\nThis user doesn't exists")
 
 
