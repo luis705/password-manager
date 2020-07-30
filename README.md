@@ -25,7 +25,6 @@
 <ul>
 	<li><a href="#-getting-started">Getting Started</a></li>
 	<li><a href="#-features">Features</a></li>
-	<li><a href="#-support">Support</a></li>
 </ul>
 
 ---
