@@ -25,11 +25,12 @@
 <ul>
 	<li><a href="#-getting-started">Getting Started</a></li>
 	<li><a href="#-features">Features</a></li>
+	<li><a href="#to-do">To do</a></li>
 </ul>
 
 ---
 
-# 🚀 Getting Started</h1>
+# 🚀 Getting Started
 <h2> Prerequisites </h2>
 
 <h3>Clone</h3>
@@ -76,7 +77,7 @@ pythohn3 gui.py
 
 ---
 
-# 📋 Features</h1>
+# 📋 Features
 
 - [X] Multiple users 
 - [X] Passwords are stored encrypted with a diferent key for each user
@@ -84,6 +85,9 @@ pythohn3 gui.py
 - [X] Options to add remove, update and check password for a given service
 - [X] Option to check registered services
 - [X] GUI
+
+# To Do
+- [ ] Avoid SQL injection attacks
 
 <h2> Built with</h2>
 <ul>
